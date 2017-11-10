@@ -6,7 +6,7 @@ import Util.util
 import scala.util.Random
 
 object Keys  extends QuestionGroup{
-  def key_signature_with_flats(q: Question): (String, String) = {
+  def key_signature_with_flats(q: QuestionArguments): (String, String) = {
     val pos = 1 + q.number
     val solution = Key.allSharps(pos -1)
     val question= "¿Que tonalidad tiene " + (pos +1) + "sostenidos?"
@@ -15,7 +15,7 @@ object Keys  extends QuestionGroup{
 
   }
 
-  def get_flats_for_signature(q: Question): (String, String) = {
+  def get_flats_for_signature(q: QuestionArguments): (String, String) = {
     val pos = 1 + q.number
     val note = Key.allSharps(pos -1)
     val flats = Key.sharps(pos)
@@ -27,12 +27,17 @@ object Keys  extends QuestionGroup{
   //TODO lo mismo para bemoles cuando funcione
 
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case key_signature_with_flats => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
-    case get_flats_for_signature => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val key_signature_with_flatsF = key_signature_with_flats _
+    val get_flats_for_signatureF = get_flats_for_signature _
+
+    f match {
+      case `key_signature_with_flatsF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+      case `get_flats_for_signatureF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(key_signature_with_flats), key_signature_with_flats),
-    (questionGenerator(get_flats_for_signature), get_flats_for_signature)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(key_signature_with_flats), key_signature_with_flats),
+    Question(questionGenerator(get_flats_for_signature), get_flats_for_signature)))
 }

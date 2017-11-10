@@ -1,6 +1,8 @@
 package Harmony
 
-class Alteration(val value: Int){
+
+
+case class Alteration(value: Int){
   assert((-4 < value) &&(value  < 4), "alteration must be between -3 and 3")
 
   override def toString: String = value match{

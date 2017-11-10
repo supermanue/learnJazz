@@ -14,11 +14,12 @@ object Main extends App{
   for ( x <- 1 until 0){
     println("value of x: " + x)
     val question = myUser.generateQuestion()
-    val answer = question._2(question._1)
-    println(answer._1)
+    val (questionText, answerText) = question.questionFunction(question.questionArguments)
+
+    println(questionText)
     println("Pulsa intro para ver la respuesta")
     scala.io.StdIn.readLine()
-    println(answer._2)
+    println(answerText)
     println ("Acertaste? y/n")
     val input=scala.io.StdIn.readLine()
     if (input=="y")

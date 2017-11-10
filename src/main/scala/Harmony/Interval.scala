@@ -1,9 +1,7 @@
 package Harmony
 
-import Util._
-
-class Interval(val value: Int, val alterationVal: Int){
-  val alteration = new Alteration(alterationVal)
+case class Interval (value: Int, alterationVal: Int){
+  val alteration = Alteration(alterationVal)
   //assert(distance > 0, "Interval " + value  + ":" + alteration + " does not exist")
 
   def distance : Int = (value, alteration.value) match{
@@ -68,29 +66,29 @@ class Interval(val value: Int, val alterationVal: Int){
 
 object IntervalGenerator {
   def possibleIntervals(): List[Interval] = List(
-    new Interval(0,0),
-    new Interval(1,-2),
-    new Interval(1,-1),
-    new Interval(1,0),
-    new Interval(1,1),
-    new Interval(2,-2),
-    new Interval(2,-1),
-    new Interval(2,0),
-    new Interval(2,1),
-    new Interval(3,-1),
-    new Interval(3,0),
-    new Interval(3,1),
-    new Interval(4,-1),
-    new Interval(4,0),
-    new Interval(4,1),
-    new Interval(5,-2),
-    new Interval(5,-1),
-    new Interval(5,0),
-    new Interval(5,1),
-    new Interval(6,-2),
-    new Interval(6,-1),
-    new Interval(6,0),
-    new Interval(7,0))
+    Interval(0,0),
+    Interval(1,-2),
+    Interval(1,-1),
+    Interval(1,0),
+    Interval(1,1),
+    Interval(2,-2),
+    Interval(2,-1),
+    Interval(2,0),
+    Interval(2,1),
+    Interval(3,-1),
+    Interval(3,0),
+    Interval(3,1),
+    Interval(4,-1),
+    Interval(4,0),
+    Interval(4,1),
+    Interval(5,-2),
+    Interval(5,-1),
+    Interval(5,0),
+    Interval(5,1),
+    Interval(6,-2),
+    Interval(6,-1),
+    Interval(6,0),
+    Interval(7,0))
 
 }
 

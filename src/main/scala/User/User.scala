@@ -3,19 +3,19 @@ package User
 import Questions.{Question, QuestionGroup}
 import Util._
 
-class User (val id: Int, val username: String, var questions: List[QuestionGroup]) {
+class User (val id: Int, val username: String, var questionGroups: List[QuestionGroup]) {
 
-  def addQuestionArea(q: QuestionGroup) =
-    if (!questions.contains(q))
-      this.questions = questions :+ q
+  def addQuestionArea(q: QuestionGroup):Unit =
+    if (!questionGroups.contains(q))
+      this.questionGroups = questionGroups :+ q
 
-  def deleteQuestionArea(q: QuestionGroup) =
-    if (questions.contains(q))
-      this.questions = questions.diff(Seq(q))
+  def deleteQuestionArea(q: QuestionGroup):Unit =
+    if (questionGroups.contains(q))
+      this.questionGroups = questionGroups.diff(Seq(q))
 
 
-  def generateQuestion():(Question, Question => (String, String)) =
-    util.randomElement(questions).randomQuestion()
+  def generateQuestion(): Question =
+    util.randomElement(questionGroups).randomQuestion()
 
 
 }

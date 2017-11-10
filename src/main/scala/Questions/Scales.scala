@@ -8,7 +8,7 @@ import scala.util.Random
 
 object Scales extends QuestionGroup{
 
-  def modeNotes(q: Question): (String, String) = {
+  def modeNotes(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val mode = ScaleGenerator.modes()(q.number) //TODO tamaño de esto?
     val solution = mode.intervals.map(interval => rootNote + interval)
@@ -18,7 +18,7 @@ object Scales extends QuestionGroup{
     (question, answer)
   }
 
-  def modeTensions(q: Question): (String, String) = {
+  def modeTensions(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val mode = ScaleGenerator.modes()(q.number)
     val solution = mode.tensions.map(interval => rootNote + interval)
@@ -28,7 +28,7 @@ object Scales extends QuestionGroup{
     (question, answer)
   }
 
-  def modeForbiddenNotes(q: Question): (String, String) = {
+  def modeForbiddenNotes(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val mode = ScaleGenerator.modes()(q.number) //TODO tamaño de esto?
     val solution = mode.forbiddenNodes.map(interval => rootNote + interval)
@@ -39,7 +39,7 @@ object Scales extends QuestionGroup{
   }
 
 
-  def modeHarmonization(q: Question): (String, String) = {
+  def modeHarmonization(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val mode = ScaleGenerator.modes()(q.number)
     val solutionNotes = mode.intervals.map(interval => rootNote + interval) zip mode.harmonization
@@ -51,7 +51,7 @@ object Scales extends QuestionGroup{
   }
 
 
-  def scaleFromSecondaryDominant(q: Question): (String, String) = {
+  def scaleFromSecondaryDominant(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val positionToReplace = 1 + q.number
     val scales = ScaleGenerator.secondaryDominantScale(positionToReplace)
@@ -66,11 +66,11 @@ object Scales extends QuestionGroup{
     (question, answer)
   }
 
-  def scaleFromTritoneSubstitution(q: Question): (String, String) = {
+  def scaleFromTritoneSubstitution(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val positionToReplace = 1 + q.number
 
-    val startScale = rootNote + ScaleGenerator.majorScale.intervals(positionToReplace) + new Interval(1,-1)
+    val startScale = rootNote + ScaleGenerator.majorScale.intervals(positionToReplace) + Interval(1,-1)
     val scale = ScaleGenerator.lydianB9.intervals.map(interval => startScale + interval)
 
     val question = "Escala que usar en la sustitución por tritono subV7/" + util.integerToRoman(positionToReplace+1) +
@@ -82,22 +82,32 @@ object Scales extends QuestionGroup{
   }
 
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case modeNotes => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
-    case modeTensions => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
-    case modeForbiddenNotes => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
-    case modeHarmonization => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
-    case scaleFromSecondaryDominant => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(6))
-    case scaleFromTritoneSubstitution => new Question(util.randomElement(NoteGenerator.possibleKeys()),util.randomElement(List(1,2,4)))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val modeNotesF = modeNotes _
+    val modeTensionsF = modeTensions _
+    val modeForbiddenNotesF = modeForbiddenNotes _
+    val modeHarmonizationF = modeHarmonization _
+    val scaleFromSecondaryDominantF = scaleFromSecondaryDominant _
+    val scaleFromTritoneSubstitutionF = scaleFromTritoneSubstitution _
 
+
+    f match {
+      case `modeNotesF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+      case `modeTensionsF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+      case `modeForbiddenNotesF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(7))
+      case `modeHarmonizationF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
+      case `scaleFromSecondaryDominantF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(6))
+      case `scaleFromTritoneSubstitutionF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),util.randomElement(List(1,2,4)))
+
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(modeNotes), modeNotes),
-    (questionGenerator(modeTensions), modeTensions),
-    (questionGenerator(modeForbiddenNotes), modeForbiddenNotes),
-    (questionGenerator(modeHarmonization), modeHarmonization),
-    (questionGenerator(scaleFromSecondaryDominant), scaleFromSecondaryDominant),
-    (questionGenerator(scaleFromTritoneSubstitution), scaleFromTritoneSubstitution)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(modeNotes), modeNotes),
+    Question(questionGenerator(modeTensions), modeTensions),
+    Question(questionGenerator(modeForbiddenNotes), modeForbiddenNotes),
+    Question(questionGenerator(modeHarmonization), modeHarmonization),
+    Question(questionGenerator(scaleFromSecondaryDominant), scaleFromSecondaryDominant),
+    Question(questionGenerator(scaleFromTritoneSubstitution), scaleFromTritoneSubstitution)))
 
   }

@@ -5,7 +5,7 @@ import Util._
 import scala.util.Random
 
 object Triads extends QuestionGroup{
-  def ascendingTriad(q: Question): (String, String) = {
+  def ascendingTriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val triad = ChordGenerator.possibleTriads()(q.number)
     val solution = triad.intervals.map(interval => rootNote + interval)
@@ -15,7 +15,7 @@ object Triads extends QuestionGroup{
     (question, answer)
   }
 
-  def descendingTriad(q: Question): (String, String) = {
+  def descendingTriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val triad = ChordGenerator.possibleTriads()(q.number)
     val solution = triad.intervals.map(interval => rootNote + interval).reverse
@@ -25,19 +25,23 @@ object Triads extends QuestionGroup{
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case ascendingTriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
-    case descendingTriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val ascendingTriadF = ascendingTriad _
+    val descendingTriadF = descendingTriad _
+    f match {
+      case `ascendingTriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+      case `descendingTriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(ascendingTriad), ascendingTriad),
-    (questionGenerator(descendingTriad), descendingTriad)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(ascendingTriad), ascendingTriad),
+    Question(questionGenerator(descendingTriad), descendingTriad)))
 }
 
 
 object CuatriadsEasy extends QuestionGroup{
-  def ascendingCuatriad(q: Question): (String, String) = {
+  def ascendingCuatriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val cuatriad = ChordGenerator.possibleCuatriads()(q.number) //TODO: tamaño de esto?
     val solution = cuatriad.intervals.map(interval => rootNote + interval)
@@ -47,7 +51,7 @@ object CuatriadsEasy extends QuestionGroup{
     (question, answer)
   }
 
-  def descendingCuatriad(q: Question): (String, String) = {
+  def descendingCuatriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val cuatriad = ChordGenerator.possibleCuatriads()(q.number) //TODO: tamaño de esto?
     val solution = cuatriad.intervals.map(interval => rootNote + interval).reverse
@@ -57,19 +61,23 @@ object CuatriadsEasy extends QuestionGroup{
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case ascendingCuatriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
-    case descendingCuatriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val ascendingCuatriadF =ascendingCuatriad _
+    val descendingCuatriadF = descendingCuatriad _
+    f match {
+      case `ascendingCuatriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+      case `descendingCuatriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(4))
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(ascendingCuatriad), ascendingCuatriad),
-    (questionGenerator(descendingCuatriad), descendingCuatriad)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(ascendingCuatriad), ascendingCuatriad),
+    Question(questionGenerator(descendingCuatriad), descendingCuatriad)))
 
 }
 
 object CuatriadsHard  extends QuestionGroup{
-  def ascendingCuatriad(q: Question): (String, String) = {
+  def ascendingCuatriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val cuatriad = ChordGenerator.possibleCuatriads()(q.number) //TODO: tamaño de esto?
     val solution = cuatriad.intervals.map(interval => rootNote + interval)
@@ -79,7 +87,7 @@ object CuatriadsHard  extends QuestionGroup{
     (question, answer)
   }
 
-  def descendingCuatriad(q: Question): (String, String) = {
+  def descendingCuatriad(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val cuatriad = ChordGenerator.possibleCuatriads()(q.number) //TODO: tamaño de esto?
     val solution = cuatriad.intervals.map(interval => rootNote + interval).reverse
@@ -89,18 +97,22 @@ object CuatriadsHard  extends QuestionGroup{
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case ascendingCuatriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(8))
-    case descendingCuatriad => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(8))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val ascendingCuatriadF = ascendingCuatriad _
+    val descendingCuatriadF = descendingCuatriad _
+    f match {
+      case `ascendingCuatriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(8))
+      case `descendingCuatriadF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(8))
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(ascendingCuatriad), ascendingCuatriad),
-    (questionGenerator(descendingCuatriad), descendingCuatriad)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(ascendingCuatriad), ascendingCuatriad),
+    Question(questionGenerator(descendingCuatriad), descendingCuatriad)))
 }
 
 object CuatriadsInMajorScale  extends QuestionGroup{
-  def cuatriadInScale(q: Question): (String, String) = {
+  def cuatriadInScale(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val posToReplace = q.number
     val solution = (rootNote + ScaleGenerator.majorScale.intervals(posToReplace)).toString +
@@ -113,7 +125,7 @@ object CuatriadsInMajorScale  extends QuestionGroup{
     (question, answer)
   }
 
-  def analyze_chord_in_Scale(q: Question): (String, String) = {
+  def analyzeChordInScale(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
     val posToReplace = q.number
     val chord = (rootNote + ScaleGenerator.majorScale.intervals(posToReplace)).toString
@@ -125,15 +137,19 @@ object CuatriadsInMajorScale  extends QuestionGroup{
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case cuatriadInScale => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
-    case analyze_chord_in_Scale => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val cuatriadInScaleF = cuatriadInScale _
+    val analyzeChordInScaleF = analyzeChordInScale _
+    f match {
+      case `cuatriadInScaleF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
+      case `analyzeChordInScaleF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(7))
 
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(cuatriadInScale), cuatriadInScale),
-    (questionGenerator(analyze_chord_in_Scale), analyze_chord_in_Scale)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(cuatriadInScale), cuatriadInScale),
+    Question(questionGenerator(analyzeChordInScale), analyzeChordInScale)))
 
   //TODO same with minor scales
   //this has to be separated so can be chosen by the user (maybe only knows major scale...)

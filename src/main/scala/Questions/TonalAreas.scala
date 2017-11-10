@@ -7,9 +7,9 @@ import Util._
 
 object TonalAreas extends QuestionGroup{
 
-  def tonalArea(q: Question): (String, String) = {
+  def tonalArea(q: QuestionArguments): (String, String) = {
     val rootNote = q.rootNote
-    val allTonalAreas = new TonalArea(rootNote)
+    val allTonalAreas = TonalArea(rootNote)
 
     val (tonalAreaName, tonalArea) = List(
       ("tónica", allTonalAreas.tonic),
@@ -21,11 +21,10 @@ object TonalAreas extends QuestionGroup{
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case tonalArea => new Question(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(3))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments =
+    QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()),Random.nextInt(3))
 
-  }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(tonalArea), tonalArea)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(tonalArea), tonalArea)))
 }

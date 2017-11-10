@@ -8,7 +8,7 @@ import scala.util.Random
 object Intervals extends QuestionGroup {
 
 
-  def ascendingInterval(q: Question):(String, String)={
+  def ascendingInterval(q: QuestionArguments):(String, String)={
     val rootNote = q.rootNote
     val interval = IntervalGenerator.possibleIntervals()(q.number)
     val solution = rootNote + interval
@@ -18,7 +18,7 @@ object Intervals extends QuestionGroup {
     (question, answer)
   }
 
-  def descendingInterval(q: Question):(String, String)={
+  def descendingInterval(q: QuestionArguments):(String, String)={
     val rootNote = q.rootNote
     val interval = IntervalGenerator.possibleIntervals()(q.number)
     val solution = rootNote - interval
@@ -28,14 +28,18 @@ object Intervals extends QuestionGroup {
     (question, answer)
   }
 
-  override def questionGenerator (f: Question=>(String, String)): Question = f match {
-    case ascendingInterval => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(23))
-    case descendingInterval => new Question(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(23))
+  override def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments = {
+    val ascendingIntervalF= ascendingInterval _
+    val descendingIntervalF=descendingInterval _
+    f match {
+      case `ascendingIntervalF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(23))
+      case `descendingIntervalF` => QuestionArguments(util.randomElement(NoteGenerator.possibleKeys()), Random.nextInt(23))
+    }
   }
 
-  override def randomQuestion(): (Question, Question => (String, String)) =  util.randomElement(List(
-    (questionGenerator(ascendingInterval), ascendingInterval),
-    (questionGenerator(descendingInterval), descendingInterval)))
+  override def randomQuestion(): Question =  util.randomElement(List(
+    Question(questionGenerator(ascendingInterval), ascendingInterval),
+    Question(questionGenerator(descendingInterval), descendingInterval)))
 
 
 

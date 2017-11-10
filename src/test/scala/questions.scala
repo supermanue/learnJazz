@@ -1,5 +1,3 @@
-package learnjazz
-
 import Harmony._
 import Questions._
 import org.junit.runner.RunWith
@@ -10,8 +8,8 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class DominantsSuite extends FunSuite {
-  val question = new Question(new Note(0,0),0)
-  val otherQuestion = new Question(new Note(0,0),1)
+  val question = QuestionArguments(Note(0,0),0)
+  val otherQuestion = QuestionArguments(Note(0,0),1)
 
 
   test("two-five ") {
@@ -70,8 +68,8 @@ class DominantsSuite extends FunSuite {
 
 @RunWith(classOf[JUnitRunner])
 class ChordsSuite extends FunSuite {
-  val question = new Question(new Note(0, 0), 0)
-  val otherQuestion = new Question(new Note(0, 0), 1)
+  val question = QuestionArguments(Note(0, 0), 0)
+  val otherQuestion = QuestionArguments(Note(0, 0), 1)
 
 
   test("ascendingTriad ") {
@@ -110,14 +108,14 @@ class ChordsSuite extends FunSuite {
   }
 
   test("analyze_chord_in_Scale ") {
-    val answer = CuatriadsInMajorScale.analyze_chord_in_Scale(question)._2
+    val answer = CuatriadsInMajorScale.analyzeChordInScale(question)._2
     assert(answer == "Imaj7", " is not correctly implemented")
   }
 }
 
   @RunWith(classOf[JUnitRunner])
   class IntervalsSuite extends FunSuite {
-    val question = new Question(new Note(0, 0), 3)
+    val question = QuestionArguments(Note(0, 0), 3)
 
     test("ascendingInterval ") {
       val answer = Intervals.ascendingInterval(question)._2
@@ -132,7 +130,7 @@ class ChordsSuite extends FunSuite {
 
 @RunWith(classOf[JUnitRunner])
 class KeysSuite extends FunSuite {
-  val question = new Question(new Note(0, 0), 6)
+  val question = QuestionArguments(Note(0, 0), 6)
 
   test("key_signature_with_flats ") {
     val answer = Keys.key_signature_with_flats(question)._2
@@ -147,7 +145,7 @@ class KeysSuite extends FunSuite {
 
   @RunWith(classOf[JUnitRunner])
   class ScalesSuite extends FunSuite {
-    val question = new Question(new Note(0, 0), 0)
+    val question = QuestionArguments(Note(0, 0), 0)
 
     test("modeNotes ") {
       val answer = Scales.modeNotes(question)._2
@@ -182,7 +180,7 @@ class KeysSuite extends FunSuite {
 
     @RunWith(classOf[JUnitRunner])
     class TonalAreasSuite extends FunSuite {
-      val question = new Question(new Note(0, 0), 0)
+      val question = QuestionArguments(Note(0, 0), 0)
 
       test("tonalAreas ") {
         val answer = TonalAreas.tonalArea(question)._2

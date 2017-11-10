@@ -1,5 +1,3 @@
-package learnjazz
-
 import Harmony._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
@@ -9,9 +7,9 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ScaleSuite extends FunSuite {
-  val C = new Note(0,0)
+  val C = Note(0,0)
 
-  def getfullScaleInfo(myScale: Scale) = (
+  def getfullScaleInfo(myScale: Scale):(String, String, String) = (
     (myScale.intervals.map(a => C + a )  zip
       myScale.harmonization).map(a=>a._1.toString + a._2.toString).mkString(" "),
     myScale.tensions.map(a => C + a ).mkString(" "),
@@ -95,8 +93,8 @@ class ScaleSuite extends FunSuite {
 class TonalAreaSuite extends FunSuite {
 
   test ("tonal areas ") {
-    val rootNote = new Note(0,0)
-    val allAreas = new TonalArea(rootNote)
+    val rootNote = Note(0,0)
+    val allAreas = TonalArea(rootNote)
     val tonic = allAreas.tonic.map(a=>a._1).mkString(" ")
     val subdominant = allAreas.subdominant.map(a=>a._1).mkString(" ")
     val dominant = allAreas.dominant.map(a=>a._1).mkString(" ")
@@ -112,21 +110,21 @@ class TonalAreaSuite extends FunSuite {
 class NoteSuite extends FunSuite {
 
   test ("equality"){
-    val A = new Note(0,0)
-    val B = new Note (0,0)
+    val A = Note(0,0)
+    val B = Note (0,0)
     assert (A==B, "Equality of notes is not correctly defined")
   }
 
   test("adding intervals") {
-    val C = new Note(0,0)
+    val C = Note(0,0)
     val allNotes = List(
       C,
-      C + new Interval(1,0),
-      C + new Interval(2,0),
-      C + new Interval(3,0),
-      C + new Interval(4,0),
-      C + new Interval(5,0),
-      C + new Interval(6,0)
+      C + Interval(1,0),
+      C + Interval(2,0),
+      C + Interval(3,0),
+      C + Interval(4,0),
+      C + Interval(5,0),
+      C + Interval(6,0)
     ).mkString(" ")
     assert(allNotes == "C D E F G A B", "interval adding is not correct")
   }
@@ -136,13 +134,13 @@ class NoteSuite extends FunSuite {
       for (baseN <- 0 to 6)
         for (baseA <- -1 to 1)
           for (intB <- 0 to 7){
-            val interval = new Interval(intB, 0)
-            val baseNote = new Note (baseN, baseA)
+            val interval = Interval(intB, 0)
+            val baseNote = Note (baseN, baseA)
             if ((baseNote - interval + interval) != baseNote)
               simetry=false
 
           }
-      assert(simetry == true, "simetry in adding and substracting intervals is not correct")
+      assert(simetry, "simetry in adding and substracting intervals is not correct")
     }
 
 }
@@ -165,7 +163,7 @@ class KeySuite extends FunSuite {
 
 @RunWith(classOf[JUnitRunner])
 class ChordSuite extends FunSuite {
-  val C = new Note(0,0)
+  val C = Note(0,0)
   test("major triad") {
     val chord = ChordGenerator.majorChord
     val solution = chord.intervals.map(interval => C+interval).mkString(" ")

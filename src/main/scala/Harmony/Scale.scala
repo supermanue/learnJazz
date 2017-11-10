@@ -1,10 +1,10 @@
 package Harmony
 
-class Scale (val intervals: List[Interval],
-             val tensions: List[Interval],
-             val forbiddenNodes: List[Interval],
-             val harmonization: List[Chord],
-             val name: String){
+case class Scale (intervals: List[Interval],
+             tensions: List[Interval],
+             forbiddenNodes: List[Interval],
+             harmonization: List[Chord],
+             name: String){
 
   override def toString: String = name.toString
 
@@ -19,7 +19,7 @@ object ScaleGenerator{
     ionianMode, dorianMode, phrygianMode, lydianMode,
     mixolidianMode, aeolianMode, locrianMode)
 
-  def secondaryDominantScale(elem: Int) = elem match{
+  def secondaryDominantScale(elem: Int):List[Scale] = elem match{
     case 1 => List(seventhScaleB13,seventhScaleB9M9B13)
     case 2 => List(seventhScaleB9B13, seventhScaleB9M9)
     case 3 => List(seventhScale)
@@ -31,21 +31,21 @@ object ScaleGenerator{
 
 
   //TODO generar todos los modos a partir del jónico, empezando desde un punto distinto
-  def ionianMode = new Scale (
+  def ionianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,0),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,0)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,0),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,0)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(3,0)
+      Interval(3,0)
     ),
     List(
       ChordGenerator.maj7Chord ,
@@ -58,21 +58,21 @@ object ScaleGenerator{
     ),
     "jónico")
 
-  def dorianMode = new Scale (
+  def dorianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(3,0)
+      Interval(1,0),
+      Interval(3,0)
     ),
     List(
-      new Interval(5,0)
+      Interval(5,0)
     ),
     List(
       ChordGenerator.minor7Chord ,
@@ -86,21 +86,21 @@ object ScaleGenerator{
     "dórico")
 
 
-  def phrygianMode = new Scale (
+  def phrygianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,-1),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,-1),
+      Interval(6,-1)),
     List(
-      new Interval(3,0)
+      Interval(3,0)
     ),
     List(
-      new Interval(1,-1),
-      new Interval(5,-1)
+      Interval(1,-1),
+      Interval(5,-1)
     ),
     List(
       ChordGenerator.minor7Chord ,
@@ -114,19 +114,19 @@ object ScaleGenerator{
     "frigio")
 
 
-  def lydianMode = new Scale (
+  def lydianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,0),
-      new Interval(3,1),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,0)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,0),
+      Interval(3,1),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,0)),
     List(
-      new Interval(1,0),
-      new Interval(3,1),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(3,1),
+      Interval(5,0)
     ),
     List(
     ),
@@ -142,21 +142,21 @@ object ScaleGenerator{
     "lidio")
 
 
-  def mixolidianMode = new Scale (
+  def mixolidianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,0),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,0),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(3,0)
+      Interval(3,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -170,21 +170,21 @@ object ScaleGenerator{
     "mixolidio")
 
 
-  def aeolianMode = new Scale (
+  def aeolianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,-1),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,-1),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(3,0)
+      Interval(1,0),
+      Interval(3,0)
     ),
     List(
-      new Interval(5,-1)
+      Interval(5,-1)
     ),
     List(
       ChordGenerator.minor7Chord ,
@@ -198,21 +198,21 @@ object ScaleGenerator{
     "eólico")
 
 
-  def locrianMode = new Scale (
+  def locrianMode = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,-1),
-      new Interval(5,-1),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,-1),
+      Interval(5,-1),
+      Interval(6,-1)),
     List(
-      new Interval(3,0),
-      new Interval(5,-1)
+      Interval(3,0),
+      Interval(5,-1)
     ),
     List(
-      new Interval(1,-1)
+      Interval(1,-1)
     ),
     List(
       ChordGenerator.halfdimishedChord ,
@@ -225,23 +225,23 @@ object ScaleGenerator{
     ),
     "locrio")
 
-  def majorScale = ionianMode
-  def naturalMinorScale = aeolianMode
-  def armonicMinor = new Scale (
+  def majorScale :Scale  = ionianMode
+  def naturalMinorScale :Scale = aeolianMode
+  def armonicMinor :Scale = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,-1),
-      new Interval(6,0)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,-1),
+      Interval(6,0)),
     List(
-      new Interval(1,0),
-      new Interval(3,0)
+      Interval(1,0),
+      Interval(3,0)
     ),
     List(
-      new Interval(5,-1)
+      Interval(5,-1)
     ),
     List(
       ChordGenerator.minorMaj7Chord ,
@@ -254,21 +254,21 @@ object ScaleGenerator{
     ),
     "menor armónico")
 
-  def melodicMinor = new Scale (
+  def melodicMinor = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,0)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,0)),
     List(
-      new Interval(1,0),
-      new Interval(3,0)
+      Interval(1,0),
+      Interval(3,0)
     ),
     List(
-      new Interval(5,0)
+      Interval(5,0)
     ),
     List(
       ChordGenerator.minorMaj7Chord ,
@@ -282,24 +282,24 @@ object ScaleGenerator{
     "menor melódico")
 
 
-  def seventhScale=mixolidianMode
+  def seventhScale :Scale =mixolidianMode
 
   //TODO modifica todo o solo esto?
-  def seventhScaleB9 = new Scale (
+  def seventhScaleB9 = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(2,0),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(2,0),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(4,0)
+      Interval(4,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -312,22 +312,22 @@ object ScaleGenerator{
     ),
     "septima b9")
 
-  def seventhScaleB13 =new Scale (
+  def seventhScaleB13 =Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,0),
-      new Interval(1,1),
-      new Interval(2,-1),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,0),
+      Interval(1,1),
+      Interval(2,-1),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(4,0)
+      Interval(4,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -339,21 +339,21 @@ object ScaleGenerator{
       ChordGenerator.maj7Chord
     ),
     "septima b13")
-  def seventhScaleB9B13 = new Scale (
+  def seventhScaleB9B13 = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(2,0),
-      new Interval(3,0),
-      new Interval(4,-1),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(2,0),
+      Interval(3,0),
+      Interval(4,-1),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(4,0)
+      Interval(4,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -366,22 +366,22 @@ object ScaleGenerator{
     ),
     "septima b9 b13")
 
-  def seventhScaleB9M9 = new Scale (
+  def seventhScaleB9M9 = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(1,1),
-      new Interval(2,0),
-      new Interval(3,0),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(1,1),
+      Interval(2,0),
+      Interval(3,0),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(4,0)
+      Interval(4,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -395,22 +395,22 @@ object ScaleGenerator{
     "septima b9 #9")
 
 
-  def seventhScaleB9M9B13 = new Scale (
+  def seventhScaleB9M9B13 = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(1,1),
-      new Interval(2,0),
-      new Interval(3,-1),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,-1)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(1,1),
+      Interval(2,0),
+      Interval(3,-1),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,-1)),
     List(
-      new Interval(1,0),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(5,0)
     ),
     List(
-      new Interval(4,0)
+      Interval(4,0)
     ),
     List(
       ChordGenerator.seventhChord ,
@@ -423,19 +423,19 @@ object ScaleGenerator{
     ),
     "septima b9 #9 b13")
 
-  def lydianB9 = new Scale (
+  def lydianB9 = Scale (
     List(
-      new Interval(0,0),
-      new Interval(1,-1),
-      new Interval(2,0),
-      new Interval(3,1),
-      new Interval(4,0),
-      new Interval(5,0),
-      new Interval(6,0)),
+      Interval(0,0),
+      Interval(1,-1),
+      Interval(2,0),
+      Interval(3,1),
+      Interval(4,0),
+      Interval(5,0),
+      Interval(6,0)),
     List(
-      new Interval(1,0),
-      new Interval(3,1),
-      new Interval(5,0)
+      Interval(1,0),
+      Interval(3,1),
+      Interval(5,0)
     ),
     List(
     ),
