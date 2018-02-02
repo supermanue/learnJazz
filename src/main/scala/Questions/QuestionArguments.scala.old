@@ -9,6 +9,6 @@ case class Question(questionArguments: QuestionArguments,
                     questionFunction: QuestionArguments=>(String, String))
 
 trait QuestionGroup{
-  def questionGenerator (f: QuestionArguments=>(String, String)): QuestionArguments
+  def questionGenerator(f: String): QuestionArguments
   def randomQuestion(): Question
 }

@@ -3,7 +3,7 @@ package User
 import Questions.{Question, QuestionGroup}
 import Util._
 
-class User (val id: Int, val username: String, var questionGroups: List[QuestionGroup]) {
+case class User (val username: String, var questionGroups: List[QuestionGroup]) {
 
   def addQuestionArea(q: QuestionGroup):Unit =
     if (!questionGroups.contains(q))
@@ -17,5 +17,5 @@ class User (val id: Int, val username: String, var questionGroups: List[Question
   def generateQuestion(): Question =
     util.randomElement(questionGroups).randomQuestion()
 
-
+  override def toString: String = username + ". Questions areas: " + questionGroups.mkString(";")
 }

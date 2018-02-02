@@ -150,16 +150,38 @@ class NoteSuite extends FunSuite {
 @RunWith(classOf[JUnitRunner])
 class KeySuite extends FunSuite {
 
-  test("flat order") {
-    val allSharps = Key.sharps(Key.allSharps.size)
+  test("sharp order") {
+    val allSharps = Key.sharpsForPosition(Key.allSharps.size-1)._2
     assert(allSharps == "F# C# G# D# A# E# B#", "Sharps are not in the correct order")
   }
-  test("no flats") {
-    val allSharps = Key.sharps(0)
-    assert(allSharps == "", "no sharps is wrong")
+  test("no sharps") {
+    val noSharps = Key.sharpsForPosition(0)._1
+    assert(noSharps == "C", "no sharps is wrong")
   }
 
+  test("one sharp") {
+    val oneSharp = Key.sharpsForPosition(1)._1
+    assert(oneSharp == "G", "one sharp is wrong")
+  }
+
+  test("flat order") {
+    val allFlats = Key.flatsForPosition(Key.allFlats.size-1)._2
+    assert(allFlats == "Bb Eb Ab Db Gb Cb Fb", "Flats are not in the correct order")
+  }
+  test("no flats") {
+    val noFlats = Key.flatsForPosition(0)._1
+    assert(noFlats == "C", "no flats is wrong")
+  }
+
+  test("one flat") {
+    val oneFlat = Key.flatsForPosition(1)._1
+    assert(oneFlat == "F", "one flat is wrong")
+  }
+
+
+
 }
+
 
 @RunWith(classOf[JUnitRunner])
 class ChordSuite extends FunSuite {
